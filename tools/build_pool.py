@@ -57,7 +57,7 @@ def convert(d):
         "id": str(d["id"]), "title": text(d["title"]), "artist": text(d.get("artist_title")), "born": born, "died": died,
         "dateStart": year(d.get("date_start")), "dateEnd": year(d.get("date_end")),
         "dateText": text(d.get("date_display")), "place": text(d.get("place_of_origin")), "medium": text(d.get("medium_display")),
-        "h": num(dims.get("height")), "w": num(dims.get("width")), "d": num(dims.get("depth")),
+        "h": num(dims.get("height")), "w": num(dims.get("width")), "d": num(dims.get("depth")), "diameter": num(dims.get("diameter")),
         "gallery": gallery, "galleryNo": int(g.group(1)) if g else None, "dept": text(d.get("department_title")), "type": text(d.get("artwork_type_title")),
         "style": text(d.get("style_title")), "kind": text(d.get("classification_title")),
         "colorfulness": num(d.get("colorfulness")), "hue": col.get("h"), "light": col.get("l"), "sat": col.get("s"),
@@ -84,7 +84,7 @@ def main(archive):
             "fieldStatus": {"id": "known (museum object id)", "title": "known", "artist": known("artist", "unattributed works have none"), "born": known("born", "read only from a plain birth year"),
                             "died": known("died", "read only from a plain death year"), "dateStart": known("dateStart", "year, negative for BCE"), "dateEnd": known("dateEnd", "year"),
                             "place": known("place", "place of origin"), "medium": known("medium", "as written by the museum"), "h": known("h", "centimetres, the first recorded dimension"),
-                            "w": known("w", "centimetres"), "d": known("d", "centimetres"), "gallery": known("gallery", "where it hangs when the snapshot was taken"),
+                            "w": known("w", "centimetres"), "d": known("d", "centimetres"), "diameter": known("diameter", "centimetres, for round objects"), "gallery": known("gallery", "where it hangs when the snapshot was taken"),
                             "dept": known("dept", "curatorial department"), "type": known("type", "artwork type"), "style": known("style", "unknown never satisfies a badge"),
                             "colorfulness": known("colorfulness", "the museum's measure from its image; unknown never satisfies a badge"), "hue": known("hue", "dominant colour, degrees"),
                             "acquired": known("acquired", "year in the accession number"), "terms": "known (how many descriptive terms the museum lists)"}}

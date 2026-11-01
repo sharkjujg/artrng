@@ -31,6 +31,8 @@ export const cases = [
   ...set('wide-date-range', {}, [[{ dateStart: 1500, dateEnd: 1600 }, true], [{ dateStart: 1500, dateEnd: 1599 }, false], [{ dateStart: 1500, dateEnd: null }, false], [{ dateStart: null, dateEnd: 1600 }, false]]),
 
   ...set('miniature-work', {}, [[{ h: 5, w: null, d: null }, true], [{ h: 5.1, w: null, d: null }, false], [{ h: null, w: null, d: null }, false], [{ h: 0, w: null, d: null }, false], [{ h: 5, w: 6, d: null }, false]]),
+  ['miniature-work', { h: 4, w: null, d: null, diameter: 24 }, false], ['miniature-work', { h: null, w: null, d: null, diameter: 5 }, true], ['small-work', { h: 4, w: null, d: null, diameter: 24 }, false],
+  ['large-work', { h: 10, w: null, d: null, diameter: 200 }, true],
   ...set('small-work', {}, [[{ h: 10, w: 4, d: null }, true], [{ h: 10.1, w: null, d: null }, false], [{ h: null, w: null, d: null }, false]]),
   ...set('large-work', {}, [[{ h: 10, w: 200, d: null }, true], [{ h: 199, w: null, d: null }, false], [{ h: null, w: null, d: null }, false]]),
   ...set('monumental-work', {}, [[{ h: 1, w: 1, d: 400 }, true], [{ h: 399, w: null, d: null }, false], [{ h: null, w: null, d: null }, false]]),
@@ -77,7 +79,7 @@ export function poolChecks(raw, pool, ok) {
   ok('object ids are numeric strings and ascend', ms.every((m, i) => /^[1-9]\d*$/.test(m.id) && (i === 0 || +m.id > +ms[i - 1].id)));
   ok('every work has a title and an artwork type', ms.every((m) => typeof m.title === 'string' && m.title.trim() && typeof m.type === 'string' && m.type.trim()));
   ok('dates are plausible years and never run backwards', ms.every((m) => (m.dateStart === null || (m.dateStart >= -6000 && m.dateStart <= 2100)) && (m.dateStart === null || m.dateEnd === null || m.dateStart <= m.dateEnd)));
-  ok('recorded dimensions are positive centimetres', ms.every((m) => ['h', 'w', 'd'].every((k) => m[k] === null || (m[k] > 0 && m[k] < 5000))));
+  ok('recorded dimensions are positive centimetres', ms.every((m) => ['h', 'w', 'd', 'diameter'].every((k) => m[k] === null || (m[k] > 0 && m[k] < 5000))));
   ok('colour measures are in range', ms.every((m) => (m.hue === null || (m.hue >= 0 && m.hue <= 360)) && (m.light === null || (m.light >= 0 && m.light <= 100)) && (m.sat === null || (m.sat >= 0 && m.sat <= 100))));
   ok('artist years are plain and in order', ms.every((m) => (m.born === null || (m.born > 1000 && m.born < 2100)) && (m.died === null || m.born === null || m.died >= m.born)));
   ok('accession years are real', ms.every((m) => m.acquired === null || (m.acquired >= 1800 && m.acquired <= 2100)));

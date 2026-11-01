@@ -11,14 +11,14 @@ const year = (x) => (Number.isInteger(x) && x >= -6000 && x <= 2100 ? x : null);
 const pct = (x, hi) => (typeof x === 'number' && Number.isFinite(x) && x >= 0 && x <= hi ? x : null);
 
 export function prep(raw) {
-  const title = text(raw.title), dims = [posn(raw.h), posn(raw.w), posn(raw.d)].filter((x) => x !== null);
+  const title = text(raw.title), dims = [posn(raw.h), posn(raw.w), posn(raw.d), posn(raw.diameter)].filter((x) => x !== null);
   const born = Number.isInteger(raw.born) && raw.born > 1000 && raw.born < 2100 ? raw.born : null;
   const died = Number.isInteger(raw.died) && raw.died > 1000 && raw.died < 2100 ? raw.died : null;
   return {
     ...raw,
     t: title ? norm(title) : null, artist: text(raw.artist), born, died, lived: born !== null && died !== null && died >= born ? died - born : null,
     dateStart: year(raw.dateStart), dateEnd: year(raw.dateEnd), place: text(raw.place), dept: text(raw.dept), type: text(raw.type),
-    medium: text(raw.medium) ? norm(raw.medium) : null, h: posn(raw.h), w: posn(raw.w), maxDim: dims.length ? Math.max(...dims) : null,
+    medium: text(raw.medium) ? norm(raw.medium) : null, h: posn(raw.h), w: posn(raw.w), diameter: posn(raw.diameter), maxDim: dims.length ? Math.max(...dims) : null,
     gallery: text(raw.gallery), galleryNo: Number.isInteger(raw.galleryNo) && raw.galleryNo > 0 ? raw.galleryNo : null,
     colorfulness: pct(raw.colorfulness, 400), hue: pct(raw.hue, 360), light: pct(raw.light, 100), sat: pct(raw.sat, 100),
     acquired: Number.isInteger(raw.acquired) && raw.acquired >= 1800 && raw.acquired <= 2100 ? raw.acquired : null,

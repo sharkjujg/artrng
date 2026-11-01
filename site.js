@@ -7,7 +7,10 @@ const cm = (x) => `${Number(x.toPrecision(3))}`;
 const ordinal = (n) => `${n}${['th', 'st', 'nd', 'rd'][n % 100 > 10 && n % 100 < 14 ? 0 : n % 10 < 4 ? n % 10 : 0]}`;
 const yr = (y) => (y < 0 ? `${-y} BCE` : String(y));
 const dateOf = (m) => m.dateText ?? (m.dateStart !== null ? (m.dateEnd !== null && m.dateEnd !== m.dateStart ? `${yr(m.dateStart)} to ${yr(m.dateEnd)}` : yr(m.dateStart)) : null);
-const sizeText = (m) => [m.h, m.w, m.d].every((x) => x === null) ? unknown : [m.h, m.w, m.d].filter((x) => x !== null).map(cm).join(' × ') + ' cm (height, width, depth as recorded)';
+const sizeText = (m) => {
+  const parts = [[m.h, 'high'], [m.w, 'wide'], [m.d, 'deep'], [m.diameter, 'diameter']].filter(([x]) => x !== null).map(([x, w]) => `${cm(x)} cm ${w}`);
+  return parts.length ? `${parts.join(', ')} (as recorded)` : unknown;
+};
 
 export default {
   key: 'artrng',

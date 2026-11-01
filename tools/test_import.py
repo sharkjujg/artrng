@@ -17,4 +17,6 @@ assert (anon["artist"], anon["born"], anon["died"], anon["galleryNo"], anon["gal
 assert bp.life("X\nAmerican, 1845-1921") == (1845, 1921) and bp.life("X\nAmerican, born 1960") == (1960, None)
 assert bp.life("X\nWorkshop of Y (Netherlandish, c. 1470/75–by 1533)") == (None, None) and bp.life("X\nTiffany (American, founded 1837)") == (None, None) and bp.life(None) == (None, None)
 assert bp.convert({**rec, "date_start": 1486490, "date_end": 1490})["dateStart"] is None and bp.convert({**rec, "date_start": -500})["dateStart"] == -500, "an impossible year is unknown, a BCE year is kept"
+plate = bp.convert({**rec, "dimensions_detail": [{"height": 4, "width": None, "depth": None, "diameter": 24}]})
+assert (plate["h"], plate["diameter"], plate["w"]) == (4.0, 24.0, None), plate  # a round object keeps its diameter
 print("OK")
